@@ -55,19 +55,18 @@ body {
     justify-content: center;
     align-items: center;
     pointer-events: none;
-    color: #222;                  /* texto oscuro */
-    text-shadow: none;            /* sin sombra dura */
-    z-index: 11; /* Encima del Nav y Footer */
+    color: #222;
+    text-shadow: none;
+    z-index: 11;
 }
 
-/* Panel de menús: ahora usa GRID para colocar el título arriba
-   y los botones en dos columnas (distribución clara) */
+/* Panel de menús en GRID (título + 2 columnas de botones) */
 .menu {
-    background: rgba(255, 255, 255, 0.9);   /* fondo claro */
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     padding: 22px;
     pointer-events: auto;
-    border: 2px solid #cfe7a6;              /* borde claro, tono verdoso */
+    border: 2px solid #cfe7a6;
     box-shadow: 0 10px 28px rgba(0,0,0,0.12);
     
     display: grid;
@@ -77,7 +76,6 @@ body {
     justify-items: center;
 }
 
-/* El título ocupa todo el ancho de la cuadrícula */
 .menu h1 {
     margin: 0 0 6px 0;
     grid-column: 1 / -1;
@@ -85,42 +83,67 @@ body {
     font-weight: 700;
 }
 
-/* Por defecto, ambos menús están ocultos; JS los muestra */
 #menu-ui,
 #game-ui {
     display: none;
 }
 
-/* Botones claros */
+/* =========================
+   BOTONES ELEGANTES con BORDE NARANJA + EMOJIS
+   ========================= */
 button {
-    font-size: 1.05em;
-    padding: 10px 18px;
-    border: 1px solid #98c910;             /* mantiene el acento, pero claro */
-    border-radius: 8px;
-    color: #1f2a1a;                         /* texto oscuro */
-    background-color: #ffffff;              /* claro */
+    --orange: #ff8a00;
+
+    position: relative;
+    font-size: 1.06em;
+    letter-spacing: .3px;
+    padding: 12px 22px;
+    border-radius: 14px;
+    color: #1f1f1f;
+    background: #ffffff;
+    border: 2px solid var(--orange);
     cursor: pointer;
-    transition: background-color 0.25s, transform 0.15s, box-shadow 0.25s;
     font-family: 'Courier New', Courier, monospace;
+
     width: 100%;
-    max-width: 260px;
+    max-width: 280px;
+
+    box-shadow: 0 10px 24px rgba(0,0,0,.08);
+    transition: transform .15s ease, box-shadow .25s ease, filter .25s ease, border-color .25s ease;
 }
+
+/* Emojis sin tocar HTML */
+#btn-to-env1::before { content: "🏠  "; }
+#btn-to-env2::before { content: "🐾  "; }
+#btn-to-menu::before { content: "🔙  "; }
 
 button:hover {
-    background-color: #e8f6c7;              /* hover claro */
-    color: #0b0b0b;
-    box-shadow: 0 6px 18px rgba(152, 201, 16, 0.25);
     transform: translateY(-1px);
+    filter: brightness(1.02);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,.06),
+      0 16px 30px rgba(255,138,0,.18);
+    border-color: #ff9f32;
 }
 
-/* Responsive: en pantallas pequeñas, los botones se apilan */
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 18px rgba(0,0,0,.10);
+}
+
+button:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 4px rgba(255,138,0,.25),
+      0 8px 18px rgba(0,0,0,.08);
+}
+
+/* Responsive */
 @media (max-width: 520px) {
-    .menu {
-        grid-template-columns: 1fr;
-    }
+    .menu { grid-template-columns: 1fr; }
 }
 
-/* VR Button claro (manteniendo tu estilo) */
+/* VR Button claro */
 #VRButton {
     z-index: 100 !important;
     position: fixed !important;
@@ -144,4 +167,31 @@ button:hover {
     writing-mode: initial !important;
     transform: none !important;
     -webkit-transform: none !important;
+}
+
+/* ===== Solo en escenas: mostrar ÚNICAMENTE el botón y que NO quede una "pastilla" ===== */
+#game-ui {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fijamos el botón abajo y centrado */
+#btn-to-menu {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  max-width: none;
+  z-index: 12;
+}
+
+/* Oculta el botón "Ir al otro entorno" */
+#btn-to-other {
+  display: none !important;
 }
